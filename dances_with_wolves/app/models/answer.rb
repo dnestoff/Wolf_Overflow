@@ -8,7 +8,9 @@ class Answer < ActiveRecord::Base
   validate :answer_length
 
   def answer_length
-
+    if text.length < 1
+      errors.add(:text, "Can not be blank")
+    end
   end
 
 end
