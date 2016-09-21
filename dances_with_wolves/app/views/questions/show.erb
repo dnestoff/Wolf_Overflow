@@ -23,9 +23,11 @@
       </p>
     </div>
 
+    <% if logged_in? %>
     <form method='get' action="/questions/<%=@question.id%>/answers/new">
       <input type="Submit" value="Post Your Answer">
     </form>
+    <% end %>
 
     <div class="container" id="answer-list">
       <table>
@@ -39,6 +41,10 @@
             </form>
             <td><%= Vote.vote_count(answer) %></td>
             <td><%= answer.text %></td>
+            <% if logged_in? %>
+            <td><a href="/questions/<%=answer.question_id%>/answers/<%=answer.id%>/edit">Edit</a></td>
+            <td><%= erb :'answers/_delete_answer', layout: false, locals: { question: @question, answer: answer } %></td>
+            <% end %>
           </tr>
         <% end %>
       </table>

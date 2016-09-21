@@ -1,4 +1,3 @@
-### VERY MUCH NOT DRY RN ###
 
 # VOTE ON QUESTIONS
 
