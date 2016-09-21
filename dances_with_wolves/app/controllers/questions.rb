@@ -5,13 +5,13 @@ get '/questions' do
 end
 
 post '/questions' do
-  @question = Question.new(title: params[:title], text: params[:text])
+  question = Question.new(title: params[:title], text: params[:text])
 
-  if @question.save
+  if question.save
     redirect '/questions'
   else
     @errors = ["input cannot be empty"]
-    redirect "/questions/#{@question.id}"
+    erb :"/questions/index", layout: false, locals: {errors: @errors}
   end
 end
 

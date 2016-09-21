@@ -7,15 +7,20 @@
   <body>
     <div class="container">
       <h3>Wolf Overflow</h3>
+
       <% @questions.each do |question| %>
       <ul id="question-list">
         <li> <a href="/questions/<%= question.id %>"><%= question.title %></a></li>
       </ul>
       <% end %>
-      <% if @errors %>
-      <%= erb :_errors, layout: false, locals: {errors: @errors} %>
-      <% end %>
+
+
+        <%= erb :_errors, layout: false, locals: {errors: @errors} %>
+        
+
+      <% if logged_in? %>
         <%= erb :"/questions/_new_question_form", layout: false %>
+      <% end %>
     </div>
   </body>
 </html>
