@@ -144,6 +144,7 @@ post '/questions/:question_id/comments/:comment_id/votes/new/upvote' do
   if logged_in?
     vote_params = { voteable_id: params[:comment_id], voteable_type: "Comment", voter_id: logged_in_user.id}
     vote = Vote.find_by(vote_params)
+    p vote
     if vote.nil?
       Vote.create(vote_params.merge({upvote?: true}))
     elsif Vote.find_by(vote_params.merge({upvote?: true})).nil?
@@ -165,9 +166,10 @@ end
 post '/questions/:question_id/comments/:comment_id/votes/new/downvote' do
   if logged_in?
     vote_params = { voteable_id: params[:comment_id], voteable_type: "Comment", voter_id: logged_in_user.id }
-    vote = Vote.find_by(vote_params.merge({upvote?: false}))
+    vote = Vote.find_by(vote_params)
+    p vote
     if vote.nil?
-      Vote.create(vote_params)
+      Vote.create(vote_paramsmerge({upvote?: false}))
     elsif Vote.find_by(vote_params.merge({upvote?: false})).nil?
       vote.destroy
       Vote.create(vote_params.merge({upvote?: false}))
