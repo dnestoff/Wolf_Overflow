@@ -22,8 +22,15 @@
 <body>
 <div id="content">
   <header>
-    <div id="login-toolbar">
-
+    <ul id="login-toolbar">
+      <% if !logged_in? %>
+        <li><a href="/login">Login</a></li>
+        <li><a href="/users/new">Register</a></li>
+      <% else %>
+        <li><a href="/users/<%= "#{logged_in_user.id}" %>"><%= logged_in_user.username %></li>
+        <li><a href="/logout">Logout</a></li>
+      <% end %>
+    </ul>
   </header>
   <%= yield %>
 </div>
