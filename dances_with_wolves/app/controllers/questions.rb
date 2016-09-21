@@ -4,14 +4,17 @@ get '/questions' do
   erb :"/questions/index"
 end
 
+
+
 post '/questions' do
   question = Question.new(title: params[:title], text: params[:text])
+  @questions = Question.all
 
   if question.save
     redirect '/questions'
   else
-    @errors = ["input cannot be empty"]
-    erb :"/questions/index", layout: false, locals: {errors: @errors}
+    @errors = ["title cannot be empty"]
+    erb :"/questions/index"
   end
 end
 

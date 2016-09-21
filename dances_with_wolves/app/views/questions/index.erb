@@ -14,9 +14,9 @@
       </ul>
       <% end %>
 
-
+      <% if @errors %>
         <%= erb :_errors, layout: false, locals: {errors: @errors} %>
-        
+      <% end %>
 
       <% if logged_in? %>
         <%= erb :"/questions/_new_question_form", layout: false %>
