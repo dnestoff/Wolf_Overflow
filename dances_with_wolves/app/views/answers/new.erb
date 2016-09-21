@@ -1,0 +1,5 @@
+<% if @errors %>
+  <%= erb :_errors, layout: false, locals: { errors: @errors} %>
+<% end %>
+
+<%= erb :_add_answer, layout: false %>
