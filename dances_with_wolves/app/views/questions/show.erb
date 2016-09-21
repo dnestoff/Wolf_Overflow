@@ -24,6 +24,34 @@
     </div>
 
     <% if logged_in? %>
+      <%= erb :"/comments/_new_question_comment", layout: false, locals: {questions: @question } %>
+    <% end %>
+
+    <div class="container" id="question-comment-list">
+      <h6>Comments:</h6>
+
+      <table>
+        <% @comments.each do |comment| %>
+        <tr>
+          <td>
+            <%= 'votes go here' %>
+          </td>
+          <td>
+            <%= comment.text %> by <%= comment.commenter.username %>
+          </td>
+          <td>
+            <form class="delete-question-comment" action="/questions/<%= @question.id %>/comments/<%= comment.id %>" method="post">
+              <input type="hidden" name="_method" value="DELETE">
+              <input class="button" type="submit" value="Delete">
+            </form>
+          </td>
+        </tr>
+        <% end %>
+      </table>
+
+    </div>
+    <br>
+    <% if logged_in? %>
     <form method='get' action="/questions/<%=@question.id%>/answers/new">
       <input type="Submit" value="Post Your Answer">
     </form>
