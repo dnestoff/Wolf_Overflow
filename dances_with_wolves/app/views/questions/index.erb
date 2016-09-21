@@ -12,6 +12,9 @@
         <li> <a href="/questions/<%= question.id %>"><%= question.title %></a></li>
       </ul>
       <% end %>
+      <% if @errors %>
+      <%= erb :_errors, layout: false, locals: {errors: @errors} %>
+      <% end %>
         <%= erb :"/questions/_new_question_form", layout: false %>
     </div>
   </body>
