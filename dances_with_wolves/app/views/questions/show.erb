@@ -65,11 +65,14 @@
     </form>
     <% end %>
 
+    <!-- if there is a favorite answer, show it here with the variable being created in the /questions/id/answers/id/favorite route -->
+
     <div class="container" id="answer-list">
         <% @answers.each do |answer| %>
 
             <table>
             <tr>
+              <!-- This is where I need to update the logic for showing a favorite link -->
               <% if !has_favorite_answer %>
                 <td>
                   <form method='post' action='/questions/<%= answer.question_id %>/answers/<%= answer.id %>/favorite'>
