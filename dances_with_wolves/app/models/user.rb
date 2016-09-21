@@ -9,8 +9,13 @@ class User < ActiveRecord::Base
   end
 
   def password= new_password
-    @password = BCrypt::Password.create(new_password)
-    self.password_hash = @password
+    @raw_password = new_password
+    if @raw_password.length > 6
+      @password = BCrypt::Password.create(@raw_password)
+      self.password_hash = @password
+    else
+      @password_length_error = "Your password must be at least 6 characters."
+    end
   end
 
   def self.authenticate (email, password)
