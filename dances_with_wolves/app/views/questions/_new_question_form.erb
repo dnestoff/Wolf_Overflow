@@ -1,3 +1,7 @@
+<% if @errors %>
+  <%= erb :_errors, layout: false, locals: {errors: @errors} %>
+<% end %>
+
 <div class="container" id="question">
   <form class="question-form" action="/questions" method="post">
     <label for="title">Title:</label>
