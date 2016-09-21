@@ -15,6 +15,20 @@ question = Question.find(params[:id])
   end
 end
 
+get '/questions/:id/comments/:comment_id/edit' do
+  @question = Question.find(params[:id])
+  @comment = Comment.find(params[:comment_id])
+
+  erb :"/comments/edit_question_comment"
+end
+
+put '/questions/:question_id/comments/:id' do
+  question = Question.find(params[:question_id])
+  @comment = Comment.find(params[:id])
+  @comment.update_attributes(text: params[:text])
+
+  redirect "/questions/#{question.id}"
+end
 
 delete '/questions/:question_id/comments/:id' do
   question = Question.find(params[:question_id])

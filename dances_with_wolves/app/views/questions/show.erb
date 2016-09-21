@@ -40,6 +40,9 @@
             <%= comment.text %> by <%= comment.commenter.username %>
           </td>
           <td>
+            <a href="/questions/<%= @question.id %>/comments/<%= comment.id %>/edit">Edit</a>
+          </td>
+          <td>
             <form class="delete-question-comment" action="/questions/<%= @question.id %>/comments/<%= comment.id %>" method="post">
               <input type="hidden" name="_method" value="DELETE">
               <input class="button" type="submit" value="Delete">
