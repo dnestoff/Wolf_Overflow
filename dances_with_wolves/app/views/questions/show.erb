@@ -8,7 +8,15 @@
     <div class="container">
 
       <h3><%= @question.title %></h3>
-
+      <tr>
+            <form action="/questions/<%=@question.id%>/votes/new/upvote" method="post">
+              <td><input type="image" height="42" width="42" src="https://image.freepik.com/free-icon/thumbs-up-hand-outline_318-41813.jpg" alt="Upvote"></td>
+            </form>
+            <form action="/questions/<%=@question.id%>/votes/new/downvote" method="post">
+              <td><input type="image" height="42" width="42" src="https://image.freepik.com/free-icon/thumbs-down-hand-outline_318-41753.png"></td>
+            </form>
+        <td><%= Vote.vote_count(@question) %></td>
+      </tr>
       <p>
 
         <li><%= @question.text %></li>
@@ -43,18 +51,28 @@
 
     </div>
     <br>
-
-
+    <% if logged_in? %>
     <form method='get' action="/questions/<%=@question.id%>/answers/new">
       <input type="Submit" value="Post Your Answer">
     </form>
+    <% end %>
 
     <div class="container" id="answer-list">
       <table>
         <% @answers.each do |answer| %>
           <tr>
-            <td><%= "votes go here"  %></td>
+            <form action="/questions/<%=answer.question_id%>/answers/<%=answer.id%>/votes/new/upvote" method="post">
+              <td><input type="image" height="42" width="42" src="https://image.freepik.com/free-icon/thumbs-up-hand-outline_318-41813.jpg" alt="Upvote"></td>
+            </form>
+            <form action="/questions/<%=answer.question_id%>/answers/<%=answer.id%>/votes/new/downvote" method="post">
+              <td><input type="image" height="42" width="42" src="https://image.freepik.com/free-icon/thumbs-down-hand-outline_318-41753.png"></td>
+            </form>
+            <td><%= Vote.vote_count(answer) %></td>
             <td><%= answer.text %></td>
+            <% if logged_in? %>
+            <td><a href="/questions/<%=answer.question_id%>/answers/<%=answer.id%>/edit">Edit</a></td>
+            <td><%= erb :'answers/_delete_answer', layout: false, locals: { question: @question, answer: answer } %></td>
+            <% end %>
           </tr>
         <% end %>
       </table>

@@ -5,7 +5,6 @@ end
 
 post '/questions/:id/answers' do
   @question = Question.find(params[:id])
-  p @question
   @answer = Answer.new(text: params[:text], poster_id: session[:user_id], question_id: params[:id])
   if @answer.save
     redirect "/questions/#{@question.id}"
@@ -15,14 +14,20 @@ post '/questions/:id/answers' do
   end
 end
 
-get '/questions/:id/answers/:id/edit' do
-
+get '/questions/:id/answers/:answer_id/edit' do
+  @question = Question.find(params[:id])
+  @answer = Answer.find(params[:answer_id])
+  erb :'answers/edit'
 end
 
-put '/questions/:id/answers/:id' do
-
+put '/questions/:id/answers/:answer_id' do
+  @answer = Answer.find(params[:answer_id])
+  @answer.update_attributes(text: params[:text])
+  redirect "/questions/#{@answer.question_id}"
 end
 
-delete '/question/:id/answers/:id' do
-
+delete '/questions/:id/answers/:answer_id' do
+  @question = Question.find(params[:id])
+  Answer.find(params[:answer_id]).destroy
+  redirect "/questions/#{@question.id}"
 end
