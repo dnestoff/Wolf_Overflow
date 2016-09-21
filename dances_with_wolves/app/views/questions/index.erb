@@ -9,13 +9,16 @@
       <h3>Wolf Overflow</h3>
 
       <% @questions.each do |question| %>
-      <ul id="question-list">
-        <li> <a href="/questions/<%= question.id %>"><%= question.title %></a></li>
-      </ul>
-      <% end %>
 
-      <% if @errors %>
-        <%= erb :_errors, layout: false, locals: {errors: @errors} %>
+      <table id="question-list">
+        <tr>
+          <td>
+
+          </td>
+          <td><a href="/questions/<%= question.id %>"><%= question.title %></a>
+          </td>
+        </tr>
+      </table>
       <% end %>
 
       <% if logged_in? %>

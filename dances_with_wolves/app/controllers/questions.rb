@@ -13,7 +13,7 @@ post '/questions' do
   if question.save
     redirect '/questions'
   else
-    @errors = ["title cannot be empty"]
+    @errors = question.errors.full_messages
     erb :"/questions/index"
   end
 end
