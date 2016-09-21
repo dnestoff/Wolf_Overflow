@@ -15,6 +15,30 @@
       </p>
     </div>
 
+    <% if logged_in? %>
+      <%= erb :"/comments/_new_question_comment", layout: false, locals: {questions: @question } %>
+    <% end %>
+
+    <div class="container" id="question-comment-list">
+      <h6>Comments:</h6>
+
+      <table>
+        <% @comments.each do |comment| %>
+        <tr>
+          <td>
+            <%= 'votes go here' %>
+          </td>
+          <td>
+            <%= comment.text %> by <%= comment.commenter.username %>
+          </td>
+        </tr>
+        <% end %>
+      </table>
+
+    </div>
+    <br>
+
+
     <form method='get' action="/questions/<%=@question.id%>/answers/new">
       <input type="Submit" value="Post Your Answer">
     </form>

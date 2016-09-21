@@ -23,16 +23,6 @@
 <div id="content">
   <header>
     <ul id="login-toolbar">
-<<<<<<< HEAD
-      <% if !logged_in? %>
-        <li><a href="/login">Login</a></li>
-        <li><a href="/users/new">Register</a></li>
-      <% else %>
-        <li><a href="/users/<%= "#{logged_in_user.id}" %>"><%= logged_in_user.username %></li>
-        <li><a href="/logout">Logout</a></li>
-      <% end %>
-    </ul>
-=======
      <% if !logged_in? %>
        <li><a href="/login">Login</a></li>
        <li><a href="/users/new">Register</a></li>
@@ -41,7 +31,6 @@
        <li><a href="/logout">Logout</a></li>
      <% end %>
    </ul>
->>>>>>> master
   </header>
   <%= yield %>
 </div>
