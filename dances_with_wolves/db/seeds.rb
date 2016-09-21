@@ -17,14 +17,14 @@ end
 end
 
 500.times do
-  Comment.create(text: Faker::Hipster.sentence, commentable_id: rand(1..50), commentable_type: "question", commenter_id: rand(1..20))
+  Comment.create(text: Faker::Hipster.sentence, commentable_id: rand(1..50), commentable_type: "Question", commenter_id: rand(1..20))
 end
 
 500.times do
-  Comment.create(text: Faker::Hipster.sentence, commentable_id: rand(1..200), commentable_type: "answer", commenter_id: rand(1..20))
+  Comment.create(text: Faker::Hipster.sentence, commentable_id: rand(1..200), commentable_type: "Answer", commenter_id: rand(1..20))
 end
 
-hash = { "answer" => 200, "question" => 50, "comment" => 1000 }
+hash = { "Answer" => 200, "Question" => 50, "Comment" => 1000 }
 
 hash.each do |type, number|
   500.times do
