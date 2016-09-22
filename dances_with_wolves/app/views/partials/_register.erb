@@ -1,12 +1,12 @@
 <div id="container">
-  <h1>Register for WolfOverflow</h1>
+  <h1>Register</h1>
   <% if @errors %>
     <p><%= @errors.each {|error| error} %></p>
   <% end %>
   <form id="register-form" action="/users" method="post">
-    <input type="text" name="user_registration[username]" placeholder="Username">
-    <input type="email" name="user_registration[email]" placeholder="Email">
-    <input type="password" name="user_registration[password]" placeholder="Password">
-    <input type="submit" value="Register">
+    <input id="register-username" type="text" name="user_registration[username]" placeholder="Username">
+    <input id="register-email" type="email" name="user_registration[email]" placeholder="Email">
+    <input id="register-password" type="password" name="user_registration[password]" placeholder="Password">
+    <input id="register-submit" type="submit" value="Register">
   </form>
 </div>
