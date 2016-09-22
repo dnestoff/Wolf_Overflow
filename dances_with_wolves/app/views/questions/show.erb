@@ -98,7 +98,29 @@
           <% answer.comments.each do |comment| %>
           <table>
             <tr>
-              <%= comment.text %> by <%= comment.commenter.username %>
+              <td>
+
+              </td>
+              <td>
+
+              </td>
+              <td>
+
+              </td>
+              <td>
+                <%= comment.text %> by <%= comment.commenter.username %>
+              </td>
+              <% if logged_in? %>
+              <td>
+                <a href="/answers/<%= answer.id %>/comments/<%= comment.id %>/edit">Edit</a>
+              </td>
+              <td>
+                <form class="delete-answer-comment" action="/answers/<%= answer.id %>/comments/<%= comment.id %>" method="post">
+                  <input type="hidden" name="_method" value="DELETE">
+                  <input class="button" type="submit" value="Delete">
+                </form>
+              </td>
+              <% end %>
             </tr>
           </table>
           <% end %>
