@@ -31,3 +31,16 @@ delete '/questions/:id/answers/:answer_id' do
   Answer.find(params[:answer_id]).destroy
   redirect "/questions/#{@question.id}"
 end
+
+put '/questions/:id/answers/:answer_id/favorite' do
+  @question = Question.find(params[:id])
+  @answers = @question.answers
+  Answer.find(params[:answer_id]).update_attributes(best_answer: true)
+  redirect "/questions/#{@question.id}"
+end
+
+put '/questions/:id/answers/:answer_id/unfavorite' do
+  @question = Question.find(params[:id])
+  Answer.find(params[:answer_id]).update_attributes(best_answer: false)
+  redirect "/questions/#{@question.id}"
+end

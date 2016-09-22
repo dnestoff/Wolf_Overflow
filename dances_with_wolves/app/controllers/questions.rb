@@ -5,7 +5,7 @@ get '/questions' do
 end
 
 post '/questions' do
-  question = Question.new(title: params[:title], text: params[:text])
+  question = Question.new(title: params[:title], text: params[:text], poster_id: session[:user_id])
   @questions = Question.all
 
   if question.save
@@ -20,6 +20,7 @@ get '/questions/:id' do
   @question = Question.find(params[:id])
   @answers = @question.answers
   @comments = @question.comments
+  @favorited_answer = @answers.find_by(best_answer: true)
 
   erb :"/questions/show"
 end
