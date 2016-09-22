@@ -1,0 +1,15 @@
+<tr>
+  <th>Question</th>
+  <th>Answers</th>
+  <th>Vote Count</th>
+</tr>
+<% @user.questions.order(:created_at).each do |question| %>
+      <tr>
+        <td><a href="/questions/<%= "#{question.id}" %>"><%= question.title %></a></td>
+        <td><%= question.answers.count %></td>
+        <td><%= Vote.vote_count(question) %></td>
+      </tr>
+      <% end %>
+  </table>
+<% end %>
+

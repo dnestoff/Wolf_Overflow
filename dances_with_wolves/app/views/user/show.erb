@@ -1,8 +1,8 @@
-<div class="container">
+<div id="profile-page-container" class="container">
   <h1><%= @user.username %></h1>
   <% if !@user.questions.first.nil? %>
     <h2>My Questions</h2>
-  <table class="user-questions-table">
+  <table id="user-questions-table">
     <tr>
       <th>Question</th>
       <th>Answers</th>
@@ -16,13 +16,13 @@
       </tr>
       <% end %>
   </table>
-      <p><a href="/users/<%= "#{@user.id}" %>/questions">All my questions</a></p>
+      <p><a id="question-expand" href="/users/<%= "#{@user.id}" %>/questions">All my questions</a></p>
     <% end %>
   <br>
   <h2>My Answers</h2>
   <% if !@user.best_answers.nil? %>
     <h3>Best answers</h3>
-    <table class="user-best-answers-table">
+    <table id="user-best-answers-table">
       <tr>
         <th>Answer</th>
         <th>Vote Count</th>
@@ -36,7 +36,7 @@
     </table>
   <% end %>
   <h3>Recent answers</h3>
-  <table class="user-recent-answers-table">
+  <table id="user-recent-answers-table">
     <tr>
       <th>Answer</th>
       <th>Vote Count</th>
@@ -51,7 +51,7 @@
   <p><a href="/users/<%= "#{@user.id}" %>/answers">All my answers</a></p>
   <br>
   <h2>My Comments</h2>
-  <table class="user-comments-table">
+  <table id="user-comments-table">
     <tr>
       <th>Comment</th>
       <th>Vote Count</th>
