@@ -20,6 +20,7 @@ get '/questions/:id' do
   @question = Question.find(params[:id])
   @answers = @question.answers
   @comments = @question.comments
+  @favorited_answer = @answers.find_by(best_answer: true)
 
   erb :"/questions/show"
 end
