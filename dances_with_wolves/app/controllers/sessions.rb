@@ -10,7 +10,7 @@ post '/users' do
       session[:user_id] = @user.id
       redirect '/'
     else
-      @registration_error = "You entered something incorrectly. Please try again!"
+      @errors = ["You entered something incorrectly. Please try again!"]
       erb :'user/new'
     end
 end
@@ -27,7 +27,7 @@ post '/login' do
     session[:user_id] = @user.id
     redirect '/'
   else
-    @login_error = "Email or password incorrect."
+    @errors = ["Email or password incorrect."]
     erb :'user/login'
   end
 end
