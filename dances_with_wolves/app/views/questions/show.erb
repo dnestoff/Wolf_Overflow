@@ -40,6 +40,7 @@
             <%= comment.text %> by <%= comment.commenter.username %>
           </td>
           <td>
+            <% if logged_in? %>
             <a href="/questions/<%= @question.id %>/comments/<%= comment.id %>/edit">Edit</a>
           </td>
           <td>
@@ -48,6 +49,7 @@
               <input class="button" type="submit" value="Delete">
             </form>
           </td>
+            <% end %>
         </tr>
         <% end %>
       </table>
@@ -75,42 +77,27 @@
               <% if logged_in? %>
               <td><a href="/questions/<%=answer.question_id%>/answers/<%=answer.id%>/edit">Edit</a></td>
               <td><%= erb :'answers/_delete_answer', layout: false, locals: { question: @question, answer: answer } %></td>
-
+              <% end %>
             </tr>
           </table>
+        </div>
+
+        <div class="container" id="answer-comment-list">
+          <h4>Comments:</h4>
 
           <% if logged_in? %>
-            <%= erb :"/comments/_new_answer_comment", layout: false, locals: {answer: @answer } %>
+          <%= erb :"/comments/_new_answer_comment", layout: false, locals: { answer: answer }%>
           <% end %>
 
-          <div class="container" id="answer-comment-list">
-            <h6>Comments:</h6>
+          <% answer.comments.each do |comment| %>
+          <table>
+            <tr>
+              <%= comment.text %> by <%= comment.commenter.username %>
+            </tr>
+          </table>
+          <% end %>
+        </div>
+      <% end %>
 
-            <table>
-              <% answer.comments.each do |comment| %>
-              <tr>
-                <td>
-                  <%= 'votes go here' %>
-                </td>
-                <td>
-                  <%= comment.text %> by <%= comment.commenter.username %>
-                </td>
-                <td>
-                  <a href="/answers/<%= answer.id %>/comments/<%= comment.id %>/edit">Edit</a>
-                </td>
-                <td>
-                  <form class="delete-question-comment" action="/answers/<%= answer.id %>/comments/<%= comment.id %>" method="post">
-                    <input type="hidden" name="_method" value="DELETE">
-                    <input class="button" type="submit" value="Delete">
-                  </form>
-                </td>
-              </tr>
-              <% end %>
-              <% end %>
-            </table>
-
-          </div>
-        <% end %>
-    </div>
   </body>
 </html>
