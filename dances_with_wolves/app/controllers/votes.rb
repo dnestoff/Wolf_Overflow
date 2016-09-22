@@ -1,38 +1,14 @@
-
 # VOTE ON QUESTIONS
-
-#upvote
-post '/questions/:id/votes/new/upvote' do
+post '/questions/:id/votes/new/:vote_type' do
   if logged_in?
-    vote_params = { voteable_id: params[:id], voteable_type: "Question", voter_id: logged_in_user.id }
-    vote = Vote.find_by(vote_params)
+    vote_params_without_type = { voteable_id: params[:id], voteable_type: "Question", voter_id: logged_in_user.id }
+    vote_params = vote_params_without_type.merge(vote_type_hash(params[:vote_type]))
+    vote = Vote.find_by(vote_params_without_type)
     if vote.nil?
-      Vote.create(vote_params.merge({upvote?: true}))
-    elsif Vote.find_by(vote_params.merge({upvote?: true})).nil?
+      Vote.create(vote_params)
+    elsif Vote.find_by(vote_params).nil?
       vote.destroy
-      Vote.create(vote_params.merge({upvote?: true}))
-    else
-      vote.destroy
-    end
-    redirect "/questions/#{params[:id]}"
-  else
-    @errors = "Log in to vote."
-    @question = Question.find(params[:id])
-    @answers = @question.answers
-    erb :'/questions/show'
-  end
-end
-
-#downvote
-post '/questions/:id/votes/new/downvote' do
-  if logged_in?
-    vote_params = { voteable_id: params[:id], voteable_type: "Question", voter_id: logged_in_user.id }
-    vote = Vote.find_by(vote_params)
-    if vote.nil?
-      Vote.create(vote_params.merge({upvote?: false}))
-    elsif Vote.find_by(vote_params.merge({upvote?: false})).nil?
-      vote.destroy
-      Vote.create(vote_params.merge({upvote?: false}))
+      Vote.create(vote_params)
     else
       vote.destroy
     end
@@ -46,17 +22,16 @@ post '/questions/:id/votes/new/downvote' do
 end
 
 #VOTE ON ANSWERS
-
-#upvote
-post '/questions/:question_id/answers/:answer_id/votes/new/upvote' do
+post '/questions/:question_id/answers/:answer_id/votes/new/:vote_type' do
   if logged_in?
-    vote_params = { voteable_id: params[:answer_id], voteable_type: "Answer", voter_id: logged_in_user.id}
-    vote = Vote.find_by(vote_params)
+    vote_params_without_type = { voteable_id: params[:answer_id], voteable_type: "Answer", voter_id: logged_in_user.id}
+    vote_params = vote_params_without_type.merge(vote_type_hash(params[:vote_type]))
+    vote = Vote.find_by(vote_params_without_type)
     if vote.nil?
-      Vote.create(vote_params.merge({upvote?: true}))
-    elsif Vote.find_by(vote_params.merge({upvote?: true})).nil?
+      Vote.create(vote_params)
+    elsif Vote.find_by(vote_params).nil?
       vote.destroy
-      Vote.create(vote_params.merge({upvote?: true}))
+      Vote.create(vote_params)
     else
       vote.destroy
     end
@@ -69,43 +44,17 @@ post '/questions/:question_id/answers/:answer_id/votes/new/upvote' do
   end
 end
 
-#downvote
-post '/questions/:question_id/answers/:answer_id/votes/new/downvote' do
+# VOTE ON COMMENTS ON ANSWERS
+post '/questions/:question_id/answers/:answer_id/comments/:comment_id/votes/new/:vote_type' do
   if logged_in?
-    vote_params = { voteable_id: params[:answer_id], voteable_type: "Answer", voter_id: logged_in_user.id }
-    vote = Vote.find_by(vote_params)
+    vote_params_without_type = { voteable_id: params[:comment_id], voteable_type: "Comment", voter_id: logged_in_user.id}
+    vote_params = vote_params_without_type.merge(vote_type_hash(params[:vote_type]))
+    vote = Vote.find_by(vote_params_without_type)
     if vote.nil?
-      Vote.create(vote_params.merge({upvote?: false}))
-    elsif Vote.find_by(vote_params.merge({upvote?: false})).nil?
+      Vote.create(vote_params)
+    elsif Vote.find_by(vote_params).nil?
       vote.destroy
-      Vote.create(vote_params.merge({upvote?: false}))
-    else
-      vote.destroy
-    end
-    redirect "/questions/#{params[:question_id]}"
-  else
-    @errors = "Log in to vote."
-    @question = Question.find(params[:id])
-    @answers = @question.answers
-    erb :'/questions/show'
-  end
-end
-
-#VOTE ON COMMENTS ON ANSWERS
-
-#upvote
-post '/questions/:question_id/answers/:answer_id/comments/:comment_id/votes/new/upvote' do
-  if logged_in?
-    vote_params = { voteable_id: params[:comment_id], voteable_type: "Comment", voter_id: logged_in_user.id}
-    vote = Vote.find_by(vote_params)
-    p "$$$$$$$$$$$$$$$$$$"
-    p vote
-    if vote.nil?
-      p "@@@@@@@@@@@@@@@@@@@"
-      Vote.create(vote_params.merge({upvote?: true}))
-    elsif Vote.find_by(vote_params.merge({upvote?: true})).nil?
-      vote.destroy
-      Vote.create(vote_params.merge({upvote?: true}))
+      Vote.create(vote_params)
     else
       vote.destroy
     end
@@ -113,46 +62,23 @@ post '/questions/:question_id/answers/:answer_id/comments/:comment_id/votes/new/
   else
     @errors = "Log in to vote."
     @question = Question.find(params[:question_id])
-    @answers = @question.answers
-    erb :'/questions/show'
-  end
-end
-
-#downvote
-post '/questions/:question_id/answers/:answer_id/comments/:comment_id/votes/new/downvote' do
-  if logged_in?
-    vote_params = { voteable_id: params[:comment_id], voteable_type: "Comment", voter_id: logged_in_user.id }
-    vote = Vote.find_by(vote_params)
-    if vote.nil?
-      Vote.create(vote_params.merge({upvote?: false}))
-    elsif Vote.find_by(vote_params.merge({upvote?: false})).nil?
-      vote.destroy
-      Vote.create(vote_params.merge({upvote?: false}))
-    else
-      vote.destroy
-    end
-    redirect "/questions/#{params[:question_id]}"
-  else
-    @errors = "Log in to vote."
-    @question = Question.find(params[:id])
     @answers = @question.answers
     erb :'/questions/show'
   end
 end
 
 #VOTE ON COMMENTS ON QUESTIONS
-
-#upvote
-post '/questions/:question_id/comments/:comment_id/votes/new/upvote' do
+post '/questions/:question_id/comments/:comment_id/votes/new/:vote_type' do
   if logged_in?
-    vote_params = { voteable_id: params[:comment_id], voteable_type: "Comment", voter_id: logged_in_user.id}
-    vote = Vote.find_by(vote_params)
+    vote_params_without_type = { voteable_id: params[:comment_id], voteable_type: "Comment", voter_id: logged_in_user.id}
+    vote_params = vote_params_without_type.merge(vote_type_hash(params[:vote_type]))
+    vote = Vote.find_by(vote_params_without_type)
     p vote
     if vote.nil?
-      Vote.create(vote_params.merge({upvote?: true}))
-    elsif Vote.find_by(vote_params.merge({upvote?: true})).nil?
+      Vote.create(vote_params)
+    elsif Vote.find_by(vote_params).nil?
       vote.destroy
-      Vote.create(vote_params.merge({upvote?: true}))
+      Vote.create(vote_params)
     else
       vote.destroy
     end
@@ -165,26 +91,13 @@ post '/questions/:question_id/comments/:comment_id/votes/new/upvote' do
   end
 end
 
-#downvote
-post '/questions/:question_id/comments/:comment_id/votes/new/downvote' do
-  if logged_in?
-    vote_params = { voteable_id: params[:comment_id], voteable_type: "Comment", voter_id: logged_in_user.id }
-    vote = Vote.find_by(vote_params)
-    p vote
-    if vote.nil?
-      Vote.create(vote_paramsmerge({upvote?: false}))
-    elsif Vote.find_by(vote_params.merge({upvote?: false})).nil?
-      vote.destroy
-      Vote.create(vote_params.merge({upvote?: false}))
-    else
-      vote.destroy
-    end
-    redirect "/questions/#{params[:question_id]}"
-  else
-    @errors = "Log in to vote."
-    @question = Question.find(params[:id])
-    @answers = @question.answers
-    erb :'/questions/show'
+private
+# convert wildcard upvote/downvote param into upvote? attribute hash
+def vote_type_hash(vote_type_string)
+  if vote_type_string == "upvote"
+    { upvote?: true }
+  elsif vote_type_string == "downvote"
+    { upvote?: false }
   end
 end
 
