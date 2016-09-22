@@ -4,8 +4,6 @@ get '/questions' do
   erb :"/questions/index"
 end
 
-
-
 post '/questions' do
   question = Question.new(title: params[:title], text: params[:text])
   @questions = Question.all
@@ -22,6 +20,6 @@ get '/questions/:id' do
   @question = Question.find(params[:id])
   @answers = @question.answers
   @comments = @question.comments
-  
+
   erb :"/questions/show"
 end

@@ -45,6 +45,7 @@
             <%= comment.text %> by <%= comment.commenter.username %>
           </td>
           <td>
+            <% if logged_in? %>
             <a href="/questions/<%= @question.id %>/comments/<%= comment.id %>/edit">Edit</a>
           </td>
           <td>
@@ -53,6 +54,7 @@
               <input class="button" type="submit" value="Delete">
             </form>
           </td>
+            <% end %>
         </tr>
         <% end %>
       </table>
@@ -84,7 +86,46 @@
               <% end %>
             </tr>
           </table>
-        <% end %>
-    </div>
+        </div>
+
+        <div class="container" id="answer-comment-list">
+          <h4>Comments:</h4>
+
+          <% if logged_in? %>
+          <%= erb :"/comments/_new_answer_comment", layout: false, locals: { answer: answer }%>
+          <% end %>
+
+          <% answer.comments.each do |comment| %>
+          <table>
+            <tr>
+              <td>
+
+              </td>
+              <td>
+
+              </td>
+              <td>
+
+              </td>
+              <td>
+                <%= comment.text %> by <%= comment.commenter.username %>
+              </td>
+              <% if logged_in? %>
+              <td>
+                <a href="/answers/<%= answer.id %>/comments/<%= comment.id %>/edit">Edit</a>
+              </td>
+              <td>
+                <form class="delete-answer-comment" action="/answers/<%= answer.id %>/comments/<%= comment.id %>" method="post">
+                  <input type="hidden" name="_method" value="DELETE">
+                  <input class="button" type="submit" value="Delete">
+                </form>
+              </td>
+              <% end %>
+            </tr>
+          </table>
+          <% end %>
+        </div>
+      <% end %>
+
   </body>
 </html>

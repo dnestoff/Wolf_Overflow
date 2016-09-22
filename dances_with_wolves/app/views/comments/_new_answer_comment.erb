@@ -1,0 +1,11 @@
+<% if @errors %>
+  <%= erb :_errors, layout: false, locals: {errors: @errors} %>
+<% end %>
+
+<div class="container" id="comment-answer">
+  <form class="answer-comment-form" action="/answers/<%= answer.id %>/comments" method="post">
+    <label for="comment">Comment:</label>
+    <input type="text" name="text" placeholder="Comment">
+    <input type="submit" id="post-answer-comment" value="Post Comment">
+  </form>
+</div>
