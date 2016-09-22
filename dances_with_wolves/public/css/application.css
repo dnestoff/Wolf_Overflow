@@ -65,3 +65,20 @@ code {
     margin-left: -1em;
     overflow: auto;
 }
+
+#question-container {
+    background-color: #d3d3d3;
+}
+
+.comments-container {
+    font-size: .75em;
+    border: 1px dotted red;
+}
+
+#answer-display {
+    background-color: pink;
+}
+
+#answer-comments-display {
+
+}
