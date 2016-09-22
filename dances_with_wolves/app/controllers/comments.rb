@@ -46,7 +46,14 @@ end
 delete '/questions/:question_id/comments/:id' do
   question = Question.find(params[:question_id])
   @comment = Comment.find(params[:id])
-  @comment.destroy
-
-  redirect "/questions/#{question.id}"
+  if request.xhr?
+    if @comment.destroy
+      {status: 200, comment_id: @comment.id}.to_json
+    else
+      status 422
+    end
+  else
+    @comment.destroy
+    redirect "/questions/#{question.id}"
+  end
 end

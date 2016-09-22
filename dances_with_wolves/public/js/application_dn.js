@@ -45,6 +45,25 @@ $(document).ready(function() {
       };
     });
   });
+
+  $(".delete-comment").submit( function(event) {
+    event.preventDefault();
+    $form = $(this)
+    console.log("this");
+
+    request = $.ajax({
+      method: 'DELETE',
+      url: $form.attr("action"),
+      data: $form.serialize()
+    });
+
+    request.done( function(response) {
+      $form.closest("table").remove();
+    });
+
+  });
+
+
   // This guarantees that any elements we bind to will exist on the page
   // when we try to bind to them
 
