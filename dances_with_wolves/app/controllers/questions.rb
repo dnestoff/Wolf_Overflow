@@ -4,8 +4,6 @@ get '/questions' do
   erb :"/questions/index"
 end
 
-
-
 post '/questions' do
   question = Question.new(title: params[:title], text: params[:text])
   @questions = Question.all
