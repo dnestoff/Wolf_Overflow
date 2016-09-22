@@ -102,7 +102,7 @@
 
     <div class="container" id="answer-list">
       <% @answers.each do |answer| %>
-
+          <% if answer.best_answer == false %>
             <table id="answer-display">
             <tr>
               <% if !@favorited_answer %>
@@ -135,7 +135,6 @@
         <article class="comments-container" id="answer-comment-list">
           <h4>Comments:</h4>
 
-
           <% answer.comments.each do |comment| %>
           <table id="answer-comments-display">
             <tr>
@@ -167,6 +166,7 @@
             </tr>
           </table>
           <% end %>
+        <% end %>
 
           <% if logged_in?%>
           <%= erb :"/comments/_new_answer_comment", layout: false, locals: { answer: answer }%>
