@@ -1,6 +1,10 @@
 get '/questions/:id/answers/new' do
   @question = Question.find(params[:id])
-  erb :'/answers/new'
+  if request.xhr?
+    erb :'/answers/_new_form', layout: false, locals: { question: @question }
+  else
+    erb :'/answers/new'
+  end
 end
 
 post '/questions/:id/answers' do

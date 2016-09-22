@@ -2,6 +2,4 @@
   <%= erb :_errors, layout: false, locals: { errors: @errors} %>
 <% end %>
 
-<form class="new_answer" method='post' action='/questions/<%= @question.id %>/answers'>
-  <%= erb :'answers/_edit_answer', layout: false, locals: { question: @question, answer: @answer } %>
-</form>
+<%= erb :"/answers/_new_form.erb", layout: false, locals: {question: @question} %>

@@ -59,10 +59,12 @@
     </div>
     <br>
     <% if logged_in? %>
-    <form method='get' action="/questions/<%=@question.id%>/answers/new">
-      <input type="Submit" value="Post Your Answer">
-    </form>
-    <% end %>
+    <div class="post-answer-form">
+      <form method='get' action="/questions/<%=@question.id%>/answers/new">
+        <input type="Submit" id="post-answer-button" value="Post Your Answer">
+      </form>
+      <% end %>
+    </div>
 
     <% if logged_in? && @favorited_answer && current_user_id == @question.poster_id %>
       <h6><%= @question.poster.username %>'s favorite answer:</h6>

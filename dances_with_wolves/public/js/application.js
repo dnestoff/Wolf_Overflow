@@ -24,16 +24,10 @@ $(document).ready(function() {
     event.preventDefault();
 
     var $button = $(this);
-    console.log($button);
 
     var method = $button.attr('method');
-    console.log(method);
-
     var url = $button.attr('action');
-    console.log(url);
-
     var data = $button.serialize();
-    console.log(data);
 
     var request = $.ajax({
       method: method,
@@ -44,6 +38,22 @@ $(document).ready(function() {
     request.done(function(response){
       $('#question-comment-table').append(response);
     })
+  });
+
+  $('.post-answer-form').on('submit', function(event){
+    event.preventDefault();
+
+    var $button = $(this);
+    var url = $button.find('form').attr('action');
+
+    var request = $.ajax({
+      url: url
+    });
+
+    request.done(function(response){
+      $('#post-answer-button').hide();
+      $('#answer-list').prepend(response);
+    });
   });
 
 });
