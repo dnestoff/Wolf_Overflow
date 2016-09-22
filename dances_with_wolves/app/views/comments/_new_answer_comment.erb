@@ -2,7 +2,7 @@
   <%= erb :_errors, layout: false, locals: {errors: @errors} %>
 <% end %>
 
-<div class="container" id="comment-answer">
+<div class="comment-container" id="comment-answer">
   <form class="answer-comment-form" action="/answers/<%= answer.id %>/comments" method="post">
     <label for="comment">Comment:</label>
     <input type="text" name="text" placeholder="Comment">
