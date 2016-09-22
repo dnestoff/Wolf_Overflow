@@ -88,7 +88,7 @@
           </td>
           <td class="vote-total"><%= Vote.vote_count(@favorited_answer) %></td>
           <td><%= @favorited_answer.text %></td>
-          <% if logged_in_user %>
+          <% if logged_in_user && @favorited_answer.poster_id == current_user_id %>
           <td><a href="/questions/<%=@favorited_answer.question_id%>/answers/<%=@favorited_answer.id%>/edit">Edit</a></td>
           <td><%= erb :'answers/_delete_answer', layout: false, locals: { question: @question, answer: @favorited_answer } %></td>
           <% end %>
@@ -101,7 +101,7 @@
           <% if answer.best_answer == false %>
             <table class="answer-container">
             <tr>
-              <% if !@favorited_answer %>
+              <% if !@favorited_answer && current_user_id == answer.poster_id%>
                 <td>
                   <form method='post' action='/questions/<%= answer.question_id %>/answers/<%= answer.id %>/favorite'>
                     <input type="hidden" name="_method" value="put">
@@ -109,6 +109,7 @@
                   </form>
                 </td>
               <% end %>
+
               <td>
                 <form class="upvote-button" action="/questions/<%=answer.question_id%>/answers/<%=answer.id%>/votes/new/upvote" method="post">
                 <input type="image" height="42" width="42" src="https://image.freepik.com/free-icon/thumbs-up-hand-outline_318-41813.jpg" alt="Upvote">

@@ -16,20 +16,22 @@
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script src="/js/application.js"></script>
+  <script src="/js/login_ajax.js"></script>
   <script src="/js/application_dn.js"></script>
 
   <title></title>
 </head>
 <body>
+<div id="session-box"></div>
 <div id="content">
   <header id="layout-header">
     <ul id="login-toolbar">
      <% if !logged_in? %>
-       <li><a href="/login">Login</a></li>
-       <li><a href="/users/new">Register</a></li>
+       <li><a id="login-button" href="/login">Login</a></li>
+       <li><a id="register-button" href="/users/new">Register</a></li>
      <% else %>
        <li><a href="/users/<%= "#{current_user_id}" %>"><%= logged_in_user.username %></li>
-       <li><a href="/logout">Logout</a></li>
+       <li><a id="logout-button" href="/logout">Logout</a></li>
      <% end %>
       <li><a href="/">Home</a></li>
    </ul>
