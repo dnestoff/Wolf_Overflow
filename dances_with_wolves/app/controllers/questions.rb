@@ -5,7 +5,7 @@ get '/questions' do
 end
 
 post '/questions' do
-  question = Question.new(title: params[:title], text: params[:text])
+  question = Question.new(title: params[:title], text: params[:text], poster_id: session[:user_id])
   @questions = Question.all
 
   if question.save
