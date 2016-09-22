@@ -2,10 +2,10 @@
   <%= erb :_errors, layout: false, locals: {errors: @errors} %>
 <% end %>
 
-<div class="container" id="comment-question">
+
   <form class="question-comment-form" action="/questions/<%= @question.id %>/comments" method="post">
+    <input type="hidden" name="username" value="<%= logged_in_user.username %>">
     <label for="comment">Comment:</label>
-    <input type="text" name="text" placeholder="Comment">
-    <input type="submit" id="post-question-comment" value="Post Comment">
+    <input type="text" id="comment-text" name="text" placeholder="Comment">
+    <input type="submit" id="post-new-question-comment-button" value="Post Comment">
   </form>
-</div>
