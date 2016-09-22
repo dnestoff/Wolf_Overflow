@@ -14,8 +14,9 @@ post '/questions/:id/votes/new/:vote_type' do
     end
     redirect "/questions/#{params[:id]}"
   else
-    @errors = "Log in to vote."
+    @errors = ["Log in to vote."]
     @question = Question.find(params[:id])
+    @comments = @question.comments
     @answers = @question.answers
     erb :'/questions/show'
   end
@@ -37,8 +38,9 @@ post '/questions/:question_id/answers/:answer_id/votes/new/:vote_type' do
     end
     redirect "/questions/#{params[:question_id]}"
   else
-    @errors = "Log in to vote."
+    @errors = ["Log in to vote."]
     @question = Question.find(params[:question_id])
+    @comments = @question.comments
     @answers = @question.answers
     erb :'/questions/show'
   end
@@ -60,8 +62,9 @@ post '/questions/:question_id/answers/:answer_id/comments/:comment_id/votes/new/
     end
     redirect "/questions/#{params[:question_id]}"
   else
-    @errors = "Log in to vote."
+    @errors = ["Log in to vote."]
     @question = Question.find(params[:question_id])
+    @comments = @question.comments
     @answers = @question.answers
     erb :'/questions/show'
   end
@@ -84,8 +87,9 @@ post '/questions/:question_id/comments/:comment_id/votes/new/:vote_type' do
     end
     redirect "/questions/#{params[:question_id]}"
   else
-    @errors = "Log in to vote."
+    @errors = ["Log in to vote."]
     @question = Question.find(params[:question_id])
+    @comments = @question.comments
     @answers = @question.answers
     erb :'/questions/show'
   end
