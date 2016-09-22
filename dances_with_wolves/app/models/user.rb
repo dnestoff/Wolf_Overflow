@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
       @password = BCrypt::Password.create(@raw_password)
       self.password_hash = @password
     else
-      @password_length_error = "Your password must be at least 6 characters."
+      @errors = ["Your password must be at least 6 characters."]
     end
   end
 
@@ -26,4 +26,11 @@ class User < ActiveRecord::Base
     nil
   end
 
+  def best_answers
+    if self.answers.find_by(best_answer: true)
+      self.answers.where(best_answer: true)
+    else
+      nil
+    end
+  end
 end
