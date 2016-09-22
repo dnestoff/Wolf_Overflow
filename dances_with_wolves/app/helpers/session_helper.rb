@@ -8,4 +8,8 @@ helpers do
       User.find(session[:user_id])
     end
   end
+
+  def current_user_id
+    logged_in_user.id
+  end
 end
