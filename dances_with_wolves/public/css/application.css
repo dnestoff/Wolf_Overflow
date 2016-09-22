@@ -82,7 +82,12 @@ code {
 .comments-container {
     font-size: .75em;
     border: 1px dotted red;
+    background-color: ;
 }
+
+.comments-container table { font-size: .75em; border-style: hidden; }
+
+.comments-container tr, td { border-style: hidden; padding: 1%;}
 
 #answer-display {
     background-color: pink;
@@ -91,3 +96,5 @@ code {
 #answer-comments-display {
 
 }
+
+
