@@ -45,7 +45,8 @@
             <%= comment.text %> by <%= comment.commenter.username %>
           </td>
           <td>
-            <% if current_user_id == comment.commenter_id %>
+
+            <% if logged_in? && current_user_id  == comment.commenter_id %>
             <a href="/questions/<%= @question.id %>/comments/<%= comment.id %>/edit">Edit</a>
           </td>
           <td>
@@ -123,7 +124,7 @@
               <td><%= Vote.vote_count(answer) %></td>
               <td><%= answer.text %></td>
 
-              <% if current_user_id == answer.poster_id%>
+              <% if logged_in?%>
 
               <td><a href="/questions/<%=answer.question_id%>/answers/<%=answer.id%>/edit">Edit</a></td>
               <td><%= erb :'answers/_delete_answer', layout: false, locals: { question: @question, answer: answer } %></td>
@@ -156,7 +157,7 @@
               <td>
                 <%= comment.text %> by <%= comment.commenter.username %>
               </td>
-              <% if logged_in_user == comment.commenter_id %>
+              <% if logged_in? %>
               <td>
                 <a href="/answers/<%= answer.id %>/comments/<%= comment.id %>/edit">Edit</a>
               </td>
