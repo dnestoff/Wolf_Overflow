@@ -97,4 +97,16 @@ code {
 
 }
 
+#session-box {
+    display: none;
+    position: fixed;
+    width: 20%;
+    left: 40%;
+    top: 30%;
+    background-color: pink;
+    z-index: 1;
+    text-align: center;
+    padding-bottom: 15px;
+}
+
 
