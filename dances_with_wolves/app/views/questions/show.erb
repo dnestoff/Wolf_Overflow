@@ -5,29 +5,32 @@
     <title>Question</title>
   </head>
   <body>
-    <div class="container">
+    <div id="question-container">
 
       <h3><%= @question.title %></h3>
-      <tr>
+      <p><%= @question.text %></p>
+      <table>
+        <tr>
+          <td>
             <form action="/questions/<%=@question.id%>/votes/new/upvote" method="post">
-              <td><input type="image" height="20" width="20" src="https://image.freepik.com/free-icon/thumbs-up-hand-outline_318-41813.jpg" alt="Upvote"></td>
+              <input type="image" height="20" width="20" src="https://image.freepik.com/free-icon/thumbs-up-hand-outline_318-41813.jpg" alt="Upvote">
             </form>
+          </td>
+          <td>
             <form action="/questions/<%=@question.id%>/votes/new/downvote" method="post">
-              <td><input type="image" height="20" width="20" src="https://image.freepik.com/free-icon/thumbs-down-hand-outline_318-41753.png"></td>
+                <input type="image" height="20" width="20" src="https://image.freepik.com/free-icon/thumbs-down-hand-outline_318-41753.png">
             </form>
-        <td><%= Vote.vote_count(@question) %></td>
-      </tr>
-      <p>
-
-        <li><%= @question.text %></li>
-      </p>
+          </td>
+          <td><%= Vote.vote_count(@question) %></td>
+        </tr>
+      </table>
     </div>
 
     <% if logged_in? %>
       <%= erb :"/comments/_new_question_comment", layout: false, locals: {questions: @question } %>
     <% end %>
 
-    <div class="container" id="question-comment-list">
+    <div class="comments-container" id="question-comment-list">
       <h6>Comments:</h6>
 
       <table>
@@ -67,7 +70,7 @@
     </form>
     <% end %>
 
-    <% if logged_in? && @favorited_answer && current_user_id == @question.poster_id %>%>
+    <% if logged_in? && @favorited_answer && current_user_id == @question.poster_id %>
       <h6><%= @question.poster.username %>'s favorite answer:</h6>
       <table>
         <tr>
@@ -98,9 +101,9 @@
     <% end %>
 
     <div class="container" id="answer-list">
-        <% @answers.each do |answer| %>
-
-            <table>
+      <% @answers.each do |answer| %>
+          <% if answer.best_answer == false %>
+            <table id="answer-display">
             <tr>
               <% if !@favorited_answer %>
                 <td>
@@ -128,17 +131,12 @@
               <% end %>
             </tr>
           </table>
-        </div>
 
-        <div class="container" id="answer-comment-list">
+        <article class="comments-container" id="answer-comment-list">
           <h4>Comments:</h4>
 
-          <% if logged_in?%>
-          <%= erb :"/comments/_new_answer_comment", layout: false, locals: { answer: answer }%>
-          <% end %>
-
           <% answer.comments.each do |comment| %>
-          <table>
+          <table id="answer-comments-display">
             <tr>
               <td>
                 <form action="/questions/<%=answer.question_id%>/answers/<%=answer.id%>/comments/<%=comment.id%>/votes/new/upvote" method="post">
@@ -168,8 +166,14 @@
             </tr>
           </table>
           <% end %>
-        </div>
-      <% end %>
+        <% end %>
 
+          <% if logged_in?%>
+          <%= erb :"/comments/_new_answer_comment", layout: false, locals: { answer: answer }%>
+          <% end %>
+
+        </article>
+      <% end %>
+    </div>
   </body>
 </html>
