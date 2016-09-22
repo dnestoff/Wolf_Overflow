@@ -7,14 +7,7 @@ post '/questions/:id/votes/new/:vote_type' do
     vote_params_without_type = { voteable_id: @question.id, voteable_type: "Question", voter_id: logged_in_user.id }
     vote_params = vote_params_without_type.merge(vote_type_hash(params[:vote_type]))
     vote = Vote.find_by(vote_params_without_type)
-    if vote.nil?
-      Vote.create(vote_params)
-    elsif Vote.find_by(vote_params).nil?
-      vote.destroy
-      Vote.create(vote_params)
-    else
-      vote.destroy
-    end
+    create_or_destroy_vote(vote, vote_params)
     if request.xhr?
       content_type :json
       {votes: Vote.vote_count(@question), vote_id: Vote.find_by(voter_id: logged_in_user.id, voteable_id: @question.id)}.to_json
@@ -37,14 +30,7 @@ post '/questions/:question_id/answers/:answer_id/votes/new/:vote_type' do
     vote_params_without_type = { voteable_id: params[:answer_id], voteable_type: "Answer", voter_id: logged_in_user.id}
     vote_params = vote_params_without_type.merge(vote_type_hash(params[:vote_type]))
     vote = Vote.find_by(vote_params_without_type)
-    if vote.nil?
-      Vote.create(vote_params)
-    elsif Vote.find_by(vote_params).nil?
-      vote.destroy
-      Vote.create(vote_params)
-    else
-      vote.destroy
-    end
+    create_or_destroy_vote(vote, vote_params)
     if request.xhr?
       content_type :json
       {votes: Vote.vote_count(@answer), vote_id: Vote.find_by(voter_id: logged_in_user.id, voteable_id: @answer.id)}.to_json
@@ -67,17 +53,8 @@ post '/questions/:question_id/comments/:comment_id/votes/new/:vote_type' do
     vote_params_without_type = { voteable_id: params[:comment_id], voteable_type: "Comment", voter_id: logged_in_user.id}
     vote_params = vote_params_without_type.merge(vote_type_hash(params[:vote_type]))
     vote = Vote.find_by(vote_params_without_type)
-    if vote.nil?
-      Vote.create(vote_params)
-    elsif Vote.find_by(vote_params).nil?
-      vote.destroy
-      Vote.create(vote_params)
-    else
-      vote.destroy
-    end
+    create_or_destroy_vote(vote, vote_params)
     if request.xhr?
-      puts "$$$$$$$$$$$$$$$$$$$$$$"
-      p @comment
       content_type :json
       {votes: Vote.vote_count(@comment), vote_id: Vote.find_by(voter_id: logged_in_user.id, voteable_id: @comment.id)}.to_json
     else
@@ -99,14 +76,7 @@ post '/questions/:question_id/answers/:answer_id/comments/:comment_id/votes/new/
     vote_params_without_type = { voteable_id: params[:comment_id], voteable_type: "Comment", voter_id: logged_in_user.id}
     vote_params = vote_params_without_type.merge(vote_type_hash(params[:vote_type]))
     vote = Vote.find_by(vote_params_without_type)
-    if vote.nil?
-      Vote.create(vote_params)
-    elsif Vote.find_by(vote_params).nil?
-      vote.destroy
-      Vote.create(vote_params)
-    else
-      vote.destroy
-    end
+    create_or_destroy_vote(vote, vote_params)
     if request.xhr?
       content_type :json
       {votes: Vote.vote_count(@comment), vote_id: Vote.find_by(voter_id: logged_in_user.id, voteable_id: @comment.id)}.to_json
@@ -130,5 +100,15 @@ def vote_type_hash(vote_type_string)
   end
 end
 
+def create_or_destroy_vote(vote_object, vote_params)
+  if vote_object.nil?
+    Vote.create(vote_params)
+  elsif Vote.find_by(vote_params).nil?
+    vote_object.destroy
+    Vote.create(vote_params)
+  else
+    vote_object.destroy
+  end
+end
 
 
