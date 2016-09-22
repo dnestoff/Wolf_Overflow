@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
       @password = BCrypt::Password.create(@raw_password)
       self.password_hash = @password
     else
-      @password_length_error = "Your password must be at least 6 characters."
+      @errors = ["Your password must be at least 6 characters."]
     end
   end
 

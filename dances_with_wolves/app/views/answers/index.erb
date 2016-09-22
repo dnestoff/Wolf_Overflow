@@ -10,7 +10,7 @@
 
       <% @answers.each do |answer| %>
 
-      <table id="question-list">
+      <table id="answer-list">
         <tr>
         <td><%= Vote.vote_count(answer) %></td>
           <td><a href="/questions/<%= answer.question_id %>"><%= answer.text %></a>
