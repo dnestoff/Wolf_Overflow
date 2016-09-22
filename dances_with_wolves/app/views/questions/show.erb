@@ -5,6 +5,9 @@
     <title>Question</title>
   </head>
   <body>
+    <% if @errors %>
+      <div class="error-container"><%= erb :'/_errors', layout: false, locals: {errors: @errors} %></div>
+    <% end %>
     <div id="question-container">
 
       <h3><%= @question.title %></h3>
