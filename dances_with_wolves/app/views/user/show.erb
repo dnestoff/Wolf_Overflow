@@ -1,8 +1,8 @@
 <div class="container">
   <h1><%= @user.username %></h1>
-  <table class="user-questions-table">
-    <% if !@user.questions.first.nil? %>
+  <% if !@user.questions.first.nil? %>
     <h2>My Questions</h2>
+  <table class="user-questions-table">
     <tr>
       <th>Question</th>
       <th>Answers</th>
@@ -15,6 +15,7 @@
         <td><%= Vote.vote_count(question) %></td>
       </tr>
       <% end %>
+  </table>
       <p><a href="/users/<%= "#{@user.id}" %>/questions">All my questions</a></p>
     <% end %>
   <br>
