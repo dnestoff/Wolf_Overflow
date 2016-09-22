@@ -89,7 +89,7 @@ code {
 
 .comments-container tr, td { border-style: hidden; padding: 1%;}
 
-#answer-display {
+.answer-container {
     background-color: pink;
 }
 

@@ -1,7 +1,10 @@
 # VOTE ON QUESTIONS
 post '/questions/:id/votes/new/:vote_type' do
+  @question = Question.find(params[:id])
+  @comments = @question.comments
+  @answers = @question.answers
   if logged_in?
-    vote_params_without_type = { voteable_id: params[:id], voteable_type: "Question", voter_id: logged_in_user.id }
+    vote_params_without_type = { voteable_id: @question.id, voteable_type: "Question", voter_id: logged_in_user.id }
     vote_params = vote_params_without_type.merge(vote_type_hash(params[:vote_type]))
     vote = Vote.find_by(vote_params_without_type)
     if vote.nil?
@@ -12,18 +15,24 @@ post '/questions/:id/votes/new/:vote_type' do
     else
       vote.destroy
     end
-    redirect "/questions/#{params[:id]}"
+    if request.xhr?
+      content_type :json
+      {votes: Vote.vote_count(@question), vote_id: Vote.find_by(voter_id: logged_in_user.id, voteable_id: @question.id)}.to_json
+    else
+      redirect "/questions/#{params[:id]}"
+    end
   else
     @errors = ["Log in to vote."]
-    @question = Question.find(params[:id])
-    @comments = @question.comments
-    @answers = @question.answers
     erb :'/questions/show'
   end
 end
 
 #VOTE ON ANSWERS
 post '/questions/:question_id/answers/:answer_id/votes/new/:vote_type' do
+  @question = Question.find(params[:question_id])
+  @comments = @question.comments
+  @answers = @question.answers
+  @answer = Answer.find(params[:answer_id])
   if logged_in?
     vote_params_without_type = { voteable_id: params[:answer_id], voteable_type: "Answer", voter_id: logged_in_user.id}
     vote_params = vote_params_without_type.merge(vote_type_hash(params[:vote_type]))
@@ -36,47 +45,28 @@ post '/questions/:question_id/answers/:answer_id/votes/new/:vote_type' do
     else
       vote.destroy
     end
-    redirect "/questions/#{params[:question_id]}"
-  else
-    @errors = ["Log in to vote."]
-    @question = Question.find(params[:question_id])
-    @comments = @question.comments
-    @answers = @question.answers
-    erb :'/questions/show'
-  end
-end
-
-# VOTE ON COMMENTS ON ANSWERS
-post '/questions/:question_id/answers/:answer_id/comments/:comment_id/votes/new/:vote_type' do
-  if logged_in?
-    vote_params_without_type = { voteable_id: params[:comment_id], voteable_type: "Comment", voter_id: logged_in_user.id}
-    vote_params = vote_params_without_type.merge(vote_type_hash(params[:vote_type]))
-    vote = Vote.find_by(vote_params_without_type)
-    if vote.nil?
-      Vote.create(vote_params)
-    elsif Vote.find_by(vote_params).nil?
-      vote.destroy
-      Vote.create(vote_params)
+    if request.xhr?
+      content_type :json
+      {votes: Vote.vote_count(@answer), vote_id: Vote.find_by(voter_id: logged_in_user.id, voteable_id: @answer.id)}.to_json
     else
-      vote.destroy
+      redirect "/questions/#{params[:question_id]}"
     end
-    redirect "/questions/#{params[:question_id]}"
   else
     @errors = ["Log in to vote."]
-    @question = Question.find(params[:question_id])
-    @comments = @question.comments
-    @answers = @question.answers
     erb :'/questions/show'
   end
 end
 
 #VOTE ON COMMENTS ON QUESTIONS
 post '/questions/:question_id/comments/:comment_id/votes/new/:vote_type' do
+    @question = Question.find(params[:question_id])
+    @comment = Comment.find(params[:comment_id])
+    @comments = @question.comments
+    @answers = @question.answers
   if logged_in?
     vote_params_without_type = { voteable_id: params[:comment_id], voteable_type: "Comment", voter_id: logged_in_user.id}
     vote_params = vote_params_without_type.merge(vote_type_hash(params[:vote_type]))
     vote = Vote.find_by(vote_params_without_type)
-    p vote
     if vote.nil?
       Vote.create(vote_params)
     elsif Vote.find_by(vote_params).nil?
@@ -85,15 +75,50 @@ post '/questions/:question_id/comments/:comment_id/votes/new/:vote_type' do
     else
       vote.destroy
     end
-    redirect "/questions/#{params[:question_id]}"
+    if request.xhr?
+      puts "$$$$$$$$$$$$$$$$$$$$$$"
+      p @comment
+      content_type :json
+      {votes: Vote.vote_count(@comment), vote_id: Vote.find_by(voter_id: logged_in_user.id, voteable_id: @comment.id)}.to_json
+    else
+      redirect "/questions/#{params[:question_id]}"
+    end
   else
     @errors = ["Log in to vote."]
-    @question = Question.find(params[:question_id])
-    @comments = @question.comments
-    @answers = @question.answers
     erb :'/questions/show'
   end
 end
+
+# VOTE ON COMMENTS ON ANSWERS
+post '/questions/:question_id/answers/:answer_id/comments/:comment_id/votes/new/:vote_type' do
+    @question = Question.find(params[:question_id])
+    @comments = @question.comments
+    @comment = Comment.find(params[:comment_id])
+    @answers = @question.answers
+  if logged_in?
+    vote_params_without_type = { voteable_id: params[:comment_id], voteable_type: "Comment", voter_id: logged_in_user.id}
+    vote_params = vote_params_without_type.merge(vote_type_hash(params[:vote_type]))
+    vote = Vote.find_by(vote_params_without_type)
+    if vote.nil?
+      Vote.create(vote_params)
+    elsif Vote.find_by(vote_params).nil?
+      vote.destroy
+      Vote.create(vote_params)
+    else
+      vote.destroy
+    end
+    if request.xhr?
+      content_type :json
+      {votes: Vote.vote_count(@comment), vote_id: Vote.find_by(voter_id: logged_in_user.id, voteable_id: @comment.id)}.to_json
+    else
+      redirect "/questions/#{params[:question_id]}"
+    end
+  else
+    @errors = ["Log in to vote."]
+    erb :'/questions/show'
+  end
+end
+
 
 private
 # convert wildcard upvote/downvote param into upvote? attribute hash
@@ -104,4 +129,6 @@ def vote_type_hash(vote_type_string)
     { upvote?: false }
   end
 end
+
+
 
