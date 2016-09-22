@@ -65,18 +65,46 @@
     </form>
     <% end %>
 
-    <!-- if there is a favorite answer, show it here with the variable being created in the /questions/id/answers/id/favorite route -->
+    <% if @favorited_answer %>
+      <h6><%= @question.poster.username %>'s favorite answer:</h6>
+      <table>
+        <tr>
+          <td>
+            <form method='post' action='/questions/<%= @favorited_answer.question_id %>/answers/<%= @favorited_answer.id %>/unfavorite'>
+              <input type="hidden" name="_method" value="put">
+              <input type="submit" value="Unfavorite">
+            </form>
+          </td>
+          <td>
+            <form action="/questions/<%=@favorited_answer.question_id%>/answers/<%=@favorited_answer.id%>/votes/new/upvote" method="post">
+            <input type="image" height="42" width="42" src="https://image.freepik.com/free-icon/thumbs-up-hand-outline_318-41813.jpg" alt="Upvote">
+            </form>
+          </td>
+          <td>
+            <form action="/questions/<%=@favorited_answer.question_id%>/answers/<%=@favorited_answer.id%>/votes/new/downvote" method="post">
+              <input type="image" height="42" width="42" src="https://image.freepik.com/free-icon/thumbs-down-hand-outline_318-41753.png">
+            </form>
+          </td>
+          <td><%= Vote.vote_count(@favorited_answer) %></td>
+          <td><%= @favorited_answer.text %></td>
+          <% if logged_in_user %>
+          <td><a href="/questions/<%=@favorited_answer.question_id%>/answers/<%=@favorited_answer.id%>/edit">Edit</a></td>
+          <td><%= erb :'answers/_delete_answer', layout: false, locals: { question: @question, answer: @favorited_answer } %></td>
+          <% end %>
+        </tr>
+      </table>
+    <% end %>
 
     <div class="container" id="answer-list">
         <% @answers.each do |answer| %>
 
             <table>
             <tr>
-              <!-- This is where I need to update the logic for showing a favorite link -->
-              <% if !has_favorite_answer %>
+              <% if !@favorited_answer %>
                 <td>
                   <form method='post' action='/questions/<%= answer.question_id %>/answers/<%= answer.id %>/favorite'>
                     <input type="hidden" name="_method" value="put">
+                    <input type="submit" value="favorite">
                   </form>
                 </td>
               <% end %>

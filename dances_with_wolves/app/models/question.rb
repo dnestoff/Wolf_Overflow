@@ -6,7 +6,4 @@ class Question < ActiveRecord::Base
 
   validates :text, :title, presence: true
 
-  def has_favorite_answer
-    answers.select { |answer| answer.best_answer == 1 }
-  end
 end
