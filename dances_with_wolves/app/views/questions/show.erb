@@ -45,7 +45,7 @@
             <%= comment.text %> by <%= comment.commenter.username %>
           </td>
           <td>
-            <% if current_user_id == comment.commenter_id %>
+            <% if logged_in? && current_user_id == comment.commenter_id %>
             <a href="/questions/<%= @question.id %>/comments/<%= comment.id %>/edit">Edit</a>
           </td>
           <td>
@@ -67,7 +67,7 @@
     </form>
     <% end %>
 
-    <% if @favorited_answer %>
+    <% if logged_in? && @favorited_answer && current_user_id == @question.poster_id %>%>
       <h6><%= @question.poster.username %>'s favorite answer:</h6>
       <table>
         <tr>
@@ -123,10 +123,10 @@
               <td><%= Vote.vote_count(answer) %></td>
               <td><%= answer.text %></td>
 
-              <% if current_user_id == answer.poster_id%>
+              <% if logged_in? && current_user_id == answer.poster_id%>
 
               <td><a href="/questions/<%=answer.question_id%>/answers/<%=answer.id%>/edit">Edit</a></td>
-              <td><%= erb :'answers/_delete_answer', layout: false, locals: { question: @question, answer: answer } %></td>
+              <td><%= erb :'answers/_delete_answer', layout: false, locals: { question: @question, answer: answer } %> </td>
               <% end %>
             </tr>
           </table>
