@@ -138,3 +138,7 @@ code {
     width: 40%;
 }
 
+.error-message {
+    color: red;
+}
+
