@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Wolf Overflow</title>
+  </head>
+  <body>
+    <div class="container">
+      <h3>Wolf Overflow</h3>
+
+      <% @answers.each do |answer| %>
+
+      <table id="question-list">
+        <tr>
+        <td><%= Vote.vote_count(answer) %></td>
+          <td><a href="/questions/<%= answer.question_id %>"><%= answer.text %></a>
+          </td>
+        </tr>
+      </table>
+      <% end %>
+
+      <% if logged_in? %>
+        <%= erb :"/questions/_new_question_form", layout: false %>
+      <% end %>
+    </div>
+  </body>
+</html>
+
