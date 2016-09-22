@@ -27,7 +27,7 @@
        <li><a href="/login">Login</a></li>
        <li><a href="/users/new">Register</a></li>
      <% else %>
-       <li><a href="/users/<%= "#{logged_in_user.id}" %>"><%= logged_in_user.username %></li>
+       <li><a href="/users/<%= "#{current_user_id}" %>"><%= logged_in_user.username %></li>
        <li><a href="/logout">Logout</a></li>
      <% end %>
    </ul>
