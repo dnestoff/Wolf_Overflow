@@ -21,7 +21,7 @@
 </head>
 <body>
 <div id="content">
-  <header>
+  <header id="layout-header">
     <ul id="login-toolbar">
      <% if !logged_in? %>
        <li><a href="/login">Login</a></li>
@@ -30,6 +30,7 @@
        <li><a href="/users/<%= "#{current_user_id}" %>"><%= logged_in_user.username %></li>
        <li><a href="/logout">Logout</a></li>
      <% end %>
+      <li><a href="/">Home</a></li>
    </ul>
   </header>
   <%= yield %>
