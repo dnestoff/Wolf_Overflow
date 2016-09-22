@@ -15,15 +15,15 @@ post '/answers/:id/comments' do
   end
 end
 
-# for some reasaon this path isn't working. 
-get '/answers/:id/comments/comment_id/edit' do
+# for some reasaon this path isn't working.
+get '/answers/:id/comments/:comment_id/edit' do
   @answer = Answer.find(params[:id])
   @comment = Comment.find(params[:comment_id])
 
   erb :"/comments/edit_answer_comment"
 end
 
-put '/answers/:id/comments/comment_id' do
+put '/answers/:id/comments/:comment_id' do
   comment = Comment.find(params[:comment_id])
   comment.update_attributes(text: params[:text])
   answer = Answer.find(params[:id])

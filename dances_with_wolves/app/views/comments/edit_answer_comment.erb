@@ -1,4 +1,4 @@
-<form class="edit-answer-comment" action="/answers/<%= @answer.id %>/comments/<%= @comment.comment_id %>" method="post">
+<form class="edit-answer-comment" action="/answers/<%= @answer.id %>/comments/<%= @comment.id %>" method="post">
   <input type="hidden" name="_method" value="PUT">
   <input type="text" name="text">
   <input class="button" type="submit" value="Edit">
