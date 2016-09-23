@@ -33,18 +33,17 @@
 
     <% if logged_in? %>
     <div class="new-question-comment-form">
-
       <form method='get' action="/questions/<%=@question.id%>/comments/new">
-        <input type="Submit" id="post-question-button" value="Post your comment">
+        <input type="Submit" id="post-question-comment-button" value="Post your comment">
       </form>
     </div>
 
-      <p id="new-question-form"></p>
+    <p id="new-question-comment"></p>
 
-  <div class="comment-container" id="comment-question">
-      <%= erb :"/comments/_new_question_comment", layout: false, locals: {questions: @question } %>
+      <div class="comment-container" id="comment-question">
+        <%= erb :"/comments/_new_question_comment", layout: false, locals: {questions: @question } %>
     <% end %>
-  </div>
+    </div>
 
 
     <div class="question-comments-container" id="question-comment-list">

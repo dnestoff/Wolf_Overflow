@@ -73,14 +73,18 @@
 
 
 <% if logged_in?%>
-  <div class="new-comment-form">
+  <!-- <div class="new-answer-comment-form">
+    <form method='get' action="/answers/<%= answer.id%>/comments/new">
+      <input type="Submit" id="post-answer-comment-button" value="Post your comment">
+    </form>
+  </div> -->
 
-  <form method='get' action="/answers/<%= answer.id%>/comments/new">
-    <input type="Submit" id="post-comment-form" value="Post your comment">
-  </form>
+    <p id="new-answer-comment"></p>
 
-  <%= erb :"/comments/_new_answer_comment", layout: false, locals: { answer: answer }%>
+    <%= erb :"/comments/_new_answer_comment_form", layout: false, locals: {answer: answer} %>
+
+
   <% end %>
-</div>
+  </div>
 
 </article>
