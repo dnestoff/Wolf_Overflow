@@ -15,12 +15,14 @@ post '/answers/:id/comments' do
   end
 end
 
-# for some reasaon this path isn't working.
 get '/answers/:id/comments/:comment_id/edit' do
   @answer = Answer.find(params[:id])
   @comment = Comment.find(params[:comment_id])
-
-  erb :"/comments/edit_answer_comment"
+  if request.xhr?
+    erb :"/comments/edit_answer_comment", layout: false
+  else
+    erb :"/comments/edit_answer_comment"
+  end
 end
 
 put '/answers/:id/comments/:comment_id' do

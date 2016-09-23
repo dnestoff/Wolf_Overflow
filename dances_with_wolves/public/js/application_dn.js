@@ -63,6 +63,41 @@ $(document).ready(function() {
 
   });
 
+  $(".edit-comment").click( function(event) {
+    event.preventDefault();
+    var $editLink = $(this);
+    console.log("this");
+    var $url = $editLink.attr("href");
+    console.log($url);
+
+    request = $.ajax({
+      method: 'GET',
+      url: $url
+    });
+
+    request.done( function(response) {
+      console.log(response);
+      $editLink.closest("table").append('<tr><td>'+response+'</td></tr>');
+
+    });
+
+    var $editURL = $editLink.closest("table").children().last().find("form").attr("action");
+    console.log($editUrl);
+    // request = $.ajax({
+    //   method: 'PUT',
+    //   url: $url
+    // });
+
+    // request.done( function(response) {
+    //   console.log(response);
+    //   $editLink.closest("table").append('<tr><td>'+response+'</td></tr>');
+
+    // });
+
+  });
+
+
+
 
   // This guarantees that any elements we bind to will exist on the page
   // when we try to bind to them

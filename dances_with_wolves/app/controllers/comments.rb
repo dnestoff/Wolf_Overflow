@@ -32,7 +32,7 @@ get '/questions/:id/comments/:comment_id/edit' do
   @question = Question.find(params[:id])
   @comment = Comment.find(params[:comment_id])
 
-  erb :"/comments/edit_question_comment"
+    erb :"/comments/edit_question_comment"
 end
 
 put '/questions/:question_id/comments/:id' do
