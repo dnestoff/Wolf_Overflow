@@ -1,7 +1,7 @@
 <div id="profile-page-container" class="container">
   <h1><%= @user.username %></h1>
   <% if !@user.questions.first.nil? %>
-    <h2>My Questions</h2>
+    <h3>My Questions</h3>
   <table id="user-questions-table">
     <tr>
       <th>Question</th>
@@ -19,9 +19,9 @@
       <p><a id="question-expand" href="/users/<%= "#{@user.id}" %>/questions">Show all questions</a></p>
     <% end %>
   <br>
-  <h2>My Answers</h2>
   <% if !@user.best_answers.nil? %>
-    <h3>Best answers</h3>
+  <h3>My Answers</h3>
+    <h4>Best answers</h4>
     <table id="user-best-answers-table">
       <tr>
         <th>Answer</th>
@@ -35,22 +35,25 @@
       <% end %>
     </table>
   <% end %>
-  <h3>Recent answers</h3>
-  <table id="user-recent-answers-table">
-    <tr>
-      <th>Answer</th>
-      <th>Vote Count</th>
-    </tr>
-    <% @user.answers.order(:created_at).last(5).each do |answer| %>
-    <tr>
-      <td><a href="/questions/<%="#{answer.question_id}"%>"><%= answer.text %></a></td>
-      <td><%= Vote.vote_count(answer) %></td>
-    </tr>
-    <% end %>
-  </table>
-  <p><a href="/users/<%= "#{@user.id}" %>/answers">Show all answers</a></p>
-  <br>
-  <h2>My Comments</h2>
+  <% if !@user.answers.first.nil? %>
+    <h4>Recent answers</h4>
+    <table id="user-recent-answers-table">
+      <tr>
+        <th>Answer</th>
+        <th>Vote Count</th>
+      </tr>
+      <% @user.answers.order(:created_at).last(5).each do |answer| %>
+        <tr>
+          <td><a href="/questions/<%="#{answer.question_id}"%>"><%= answer.text %></a></td>
+          <td><%= Vote.vote_count(answer) %></td>
+        </tr>
+      <% end %>
+    </table>
+    <p><a id="answer-expand"href="/users/<%= "#{@user.id}" %>/answers">Show all answers</a></p>
+    <br>
+  <% end %>
+  <% if !@user.comments.first.nil? %>
+  <h3>My Comments</h3>
   <table id="user-comments-table">
     <tr>
       <th>Comment</th>
@@ -67,6 +70,7 @@
     </tr>
     <% end %>
   </table>
-    <p><a href="/users/<%= "#{@user.id}" %>/comments">Show all comments</a></p>
+    <p id="comment-expand"><a href="/users/<%= "#{@user.id}" %>/comments">Show all comments</a></p>
+  <% end %>
 
 

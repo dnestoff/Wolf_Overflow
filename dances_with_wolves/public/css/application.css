@@ -142,3 +142,19 @@ code {
     color: red;
 }
 
+#profile-page-container {
+    text-align: left;
+    padding: 1em;
+
+}
+
+#profile-page-container h4{
+    color: black;
+    font-size: 1em;
+}
+
+#profile-page-container table{
+    margin-left: auto;
+    margin-right: auto;
+
+}
