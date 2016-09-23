@@ -16,7 +16,8 @@ get '/users/:id/questions' do
     if current_user_id == params[:id].to_i
       if request.xhr?
         @user = logged_in_user
-        erb :'partials/_show_questions'
+        p "!!!!!!!!!!!!!!!"
+        erb :'partials/_show_questions', layout: false, locals: {user: @user}
       else
         @questions = User.find(params[:id]).questions
         erb :'questions/index'
