@@ -10,11 +10,17 @@ end
 post '/questions/:id/answers' do
   @question = Question.find(params[:id])
   @answer = Answer.new(text: params[:text], poster_id: session[:user_id], question_id: params[:id])
+  @favorited_answer = @question.answers.find_by(best_answer: true)
+
   if @answer.save
-    redirect "/questions/#{@question.id}"
+    if request.xhr?
+      erb :"/answers/_new_answer", layout: false, locals: {question: @question, answer: @answer, favorited_answer: @favorited_answer}
+    else
+      redirect "/questions/#{@question.id}"
+    end
   else
-    @errors = @answer.errors.full_messages
-    erb :'answers/new'
+      @errors = @answer.errors.full_messages
+      erb :'answers/new'
   end
 end
 
