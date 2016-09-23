@@ -13,7 +13,7 @@
   <td>
     <%= comment.text %> by <%= comment.commenter.username %>
   </td>
-  <% if logged_in? %>
+  <% if logged_in? && current_user_id == comment.commenter_id %>
   <td>
     <a href="/answers/<%= answer.id %>/comments/<%= comment.id %>/edit">Edit</a>
   </td>
