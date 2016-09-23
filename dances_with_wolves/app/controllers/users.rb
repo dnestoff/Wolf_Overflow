@@ -14,8 +14,14 @@ end
 get '/users/:id/questions' do
   if logged_in?
     if current_user_id == params[:id].to_i
-      @questions = User.find(params[:id]).questions
-      erb :'questions/index'
+      if request.xhr?
+        @user = logged_in_user
+        p "!!!!!!!!!!!!!!!"
+        erb :'partials/_show_questions', layout: false, locals: {user: @user}
+      else
+        @questions = User.find(params[:id]).questions
+        erb :'questions/index'
+      end
     else
       redirect "/users/#{current_user_id}/questions"
     end

@@ -13,6 +13,7 @@ post '/users' do
     if @user.save
       session[:user_id] = @user.id
       if request.xhr?
+        @errors = @user.errors.full_messages
         erb :'/partials/_login_toolbar', layout: false
       else
         redirect '/'
@@ -38,6 +39,7 @@ post '/login' do
   if @user
     session[:user_id] = @user.id
     if request.xhr?
+      @errors = @user.errors.full_messages
       erb :'/partials/_login_toolbar', layout: false
     else
       redirect '/'
@@ -51,6 +53,10 @@ end
 # LOGOUT- Consider doing delete method
 get '/logout' do
   session[:user_id] = nil
-  redirect '/'
+  if request.xhr?
+    erb :'/partials/_login_toolbar', layout: false
+  else
+    redirect '/'
+  end
 end
 
