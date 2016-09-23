@@ -81,11 +81,11 @@ $(document).ready(function() {
 
     });
 
-    var $editURL = $editLink.closest("table").children().last().find("form").attr("action");
-    console.log($editUrl);
+    var $editURL = $editLink.closest("table").find(".edit-answer-comment").attr("action");
     // request = $.ajax({
     //   method: 'PUT',
-    //   url: $url
+    //   url: $editUrl,
+    //   data: $("edit-answer-comment").serialize()
     // });
 
     // request.done( function(response) {
