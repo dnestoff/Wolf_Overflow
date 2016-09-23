@@ -15,18 +15,16 @@ post '/answers/:id/comments' do
   answer = Answer.find(params[:id])
 
   if comment.save
-    # if request.xhr?
-    #   erb :"/comments/_new_comment_for_answer", layout: false, locals: { answer: answer, comment: comment}
-    # end
-
-    redirect "/questions/#{answer.question_id}"
-
+    if request.xhr?
+      erb :"/comments/_new_comment_for_answer", layout: false, locals: { answer: answer, comment: comment}
+    else
+      status 404
+    end
   else
     redirect "/questions/#{answer.question_id}"
   end
 end
 
-# for some reasaon this path isn't working.
 get '/answers/:id/comments/:comment_id/edit' do
   @answer = Answer.find(params[:id])
   @comment = Comment.find(params[:comment_id])
