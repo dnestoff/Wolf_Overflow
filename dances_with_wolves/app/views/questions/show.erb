@@ -48,7 +48,7 @@
     <div class="question-comments-container" id="question-comment-list">
       <h6>Comments:</h6>
 
-      <table id="question-comment-table">
+      <table id="question-comment-table" class="question-comments-display">
         <% @comments.each do |comment| %>
         <tr>
           <%= erb :"/comments/_new_comment", layout: false, locals: {question: @question, comment: comment} %>
@@ -133,7 +133,7 @@
           <h4>Comments:</h4>
 
           <% answer.comments.each do |comment| %>
-          <table id="answer-comments-display">
+          <table class="answer-comments-display">
             <tr>
               <td>
                 <form class="upvote-button" action="/questions/<%=answer.question_id%>/answers/<%=answer.id%>/comments/<%=comment.id%>/votes/new/upvote" method="post">
@@ -149,7 +149,7 @@
               <td class="comment-text">
                 <%= comment.text %> by <%= comment.commenter.username %>
               </td>
-              <% if logged_in? %>
+              <% if logged_in? && current_user_id == comment.commenter_id %>
               <td>
                 <a class="edit-comment" href="/answers/<%= answer.id %>/comments/<%= comment.id %>/edit">Edit</a>
               </td>
