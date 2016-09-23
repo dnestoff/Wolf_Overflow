@@ -1,7 +1,13 @@
 get '/answers/:id/comments/new' do
   @answer = Answer.find(params[:id])
+  @question = Question.find(@answer.question_id)
+  @favorited_answer = @question.answers.find_by(best_answer: true)
 
-  erb :"/comments/_new_answer_comment"
+  if request.xhr?
+    erb :"/comments/_new_answer_comment_form", layout: false, locals: { answer: @answer, question: @question, favorited_answer: @favorited_answer}
+  else
+    redirect "/questions/#{@answer.question_id}"
+  end
 end
 
 post '/answers/:id/comments' do
@@ -9,13 +15,16 @@ post '/answers/:id/comments' do
   answer = Answer.find(params[:id])
 
   if comment.save
-    redirect "/questions/#{answer.question_id}"
+    if request.xhr?
+      erb :"/comments/_new_comment_for_answer", layout: false, locals: { answer: answer, comment: comment}
+    else
+      status 404
+    end
   else
-    erb :"/comments/_new_answer_comment"
+    redirect "/questions/#{answer.question_id}"
   end
 end
 
-# for some reasaon this path isn't working.
 get '/answers/:id/comments/:comment_id/edit' do
   @answer = Answer.find(params[:id])
   @comment = Comment.find(params[:comment_id])

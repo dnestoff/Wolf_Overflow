@@ -1,0 +1,66 @@
+<table class="answer-container">
+<tr>
+  <% if !favorited_answer %>
+    <td>
+      <form method='post' action='/questions/<%= answer.question_id %>/answers/<%= answer.id %>/favorite'>
+        <input type="hidden" name="_method" value="put">
+        <input type="submit" value="favorite">
+      </form>
+    </td>
+    <% end %>
+  <td>
+    <form class="upvote-button" action="/questions/<%=answer.question_id%>/answers/<%=answer.id%>/votes/new/upvote" method="post">
+    <input type="image" height="42" width="42" src="https://image.freepik.com/free-icon/thumbs-up-hand-outline_318-41813.jpg" alt="Upvote">
+    </form>
+  </td>
+  <td>
+    <form class="downvote-button" action="/questions/<%=answer.question_id%>/answers/<%=answer.id%>/votes/new/downvote" method="post">
+      <input type="image" height="42" width="42" src="https://image.freepik.com/free-icon/thumbs-down-hand-outline_318-41753.png">
+    </form>
+  </td>
+  <td class="vote-total">
+    <%= Vote.vote_count(answer) %>
+  </td>
+  <td>
+    <%= answer.text %>
+  </td>
+  <% if logged_in? && current_user_id == answer.poster_id%>
+  <td>
+    <a href="/questions/<%=answer.question_id%>/answers/<%=answer.id%>/edit">Edit</a>
+  </td>
+  <td>
+    <%= erb :'answers/_delete_answer', layout: false, locals: { question: question, answer: answer } %>
+  </td>
+<% end %>
+</tr>
+</table>
+
+<article class="answer-comment-list comments-container" id="answer-comment-list">
+  <h4>Comments:</h4>
+
+  <% answer.comments.each do |comment| %>
+  <table class="answer-comments-display">
+
+      <%= erb :"/comments/_new_comment_for_answer", layout: false, locals: { answer: answer, comment: comment } %>
+    </tr>
+  </table>
+  <% end %>
+
+
+
+<% if logged_in?%>
+  <div class="new-answer-comment-form">
+    <form id="answer-comment" method='get' action="/answers/<%= answer.id%>/comments/new">
+      <input type="Submit" id="post-answer-comment-button" value="Post your comment">
+    </form>
+  </div>
+
+    <p id="new-answer-comment"></p>
+
+    <%= erb :"/comments/_new_answer_comment_form", layout: false, locals: {answer: answer} %>
+
+
+  <% end %>
+  </div>
+
+</article>

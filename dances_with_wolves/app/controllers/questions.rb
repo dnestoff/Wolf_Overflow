@@ -21,6 +21,6 @@ get '/questions/:id' do
   @answers = @question.answers
   @comments = @question.comments
   @favorited_answer = @answers.find_by(best_answer: true)
-
+  
   erb :"/questions/show"
 end
