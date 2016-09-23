@@ -89,7 +89,7 @@
           </td>
           <td class="vote-total"><%= Vote.vote_count(@favorited_answer) %></td>
           <td><%= @favorited_answer.text %></td>
-          <% if logged_in_user %>
+          <% if logged_in_user && @favorited_answer.poster_id == current_user_id %>
           <td><a href="/questions/<%=@favorited_answer.question_id%>/answers/<%=@favorited_answer.id%>/edit">Edit</a></td>
           <td><%= erb :'answers/_delete_answer', layout: false, locals: { question: @question, answer: @favorited_answer } %></td>
           <% end %>
@@ -100,7 +100,9 @@
     <div class="answer-list" id="answer-list">
       <% @answers.each do |answer| %>
           <% if answer.best_answer == false %>
+
             <%= erb :"/answers/_new_answer", layout: false, locals: { answer: answer, question: @question, favorited_answer: @favorited_answer } %>
+
         <% end %>
       <% end %>
     </div>

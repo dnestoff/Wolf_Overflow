@@ -97,4 +97,44 @@ code {
 
 }
 
+#session-box {
+    display: none;
+    position: fixed;
+    width: 20%;
+    min-width: 300px;
+    left: 40%;
+    top: 30%;
+    background-color: pink;
+    z-index: 1;
+    text-align: center;
+    padding-bottom: 15px;
+}
+
+#session-box #login-email {
+    width: 70%;
+}
+
+#session-box #login-password {
+    width: 70%;
+}
+
+#session-box #login-submit {
+    width: 30%;
+}
+
+#session-box #register-username {
+    width: 70%;
+}
+
+#session-box #register-email {
+    width: 70%;
+}
+
+#session-box #register-password {
+    width: 70%;
+}
+
+#session-box #register-submit {
+    width: 40%;
+}
 

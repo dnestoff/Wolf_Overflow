@@ -1,6 +1,10 @@
 #GET Register page
 get '/users/new' do
-  erb :'user/new'
+  if request.xhr?
+    erb :'partials/_register', layout: false
+  else
+    erb :'user/new'
+  end
 end
 
 #POST New user
@@ -8,7 +12,11 @@ post '/users' do
   @user = User.new(params[:user_registration])
     if @user.save
       session[:user_id] = @user.id
-      redirect '/'
+      if request.xhr?
+        erb :'/partials/_login_toolbar', layout: false
+      else
+        redirect '/'
+      end
     else
       @errors = ["You entered something incorrectly. Please try again!"]
       erb :'user/new'
@@ -17,7 +25,11 @@ end
 
 #GET login page
 get '/login' do
-  erb :'user/login'
+  if request.xhr?
+    erb :'/partials/_login', layout: false
+  else
+    erb :'user/login'
+  end
 end
 
 #LOGIN
@@ -25,7 +37,11 @@ post '/login' do
   @user = User.authenticate(params[:email], params[:password])
   if @user
     session[:user_id] = @user.id
-    redirect '/'
+    if request.xhr?
+      erb :'/partials/_login_toolbar', layout: false
+    else
+      redirect '/'
+    end
   else
     @errors = ["Email or password incorrect."]
     erb :'user/login'
