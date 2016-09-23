@@ -39,7 +39,7 @@
   <h4>Comments:</h4>
 
   <% answer.comments.each do |comment| %>
-  <table id="answer-comments-display">
+  <table class="answer-comments-display">
 
       <%= erb :"/comments/_new_comment_for_answer", layout: false, locals: { answer: answer, comment: comment } %>
     </tr>
