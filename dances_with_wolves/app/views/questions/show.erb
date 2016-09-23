@@ -101,16 +101,9 @@
     <div class="answer-list" id="answer-list">
       <% @answers.each do |answer| %>
           <% if answer.best_answer == false %>
-
-
-
             <%= erb :"/answers/_new_answer", layout: false, locals: { answer: answer, question: @question, favorited_answer: @favorited_answer } %>
-
-
-
-
         <% end %>
       <% end %>
-</div>
+    </div>
   </body>
 </html>

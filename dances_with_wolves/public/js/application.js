@@ -58,16 +58,11 @@ $(document).ready(function() {
 
   $('#answer-list').on('submit', '.new-answer', function(event){
     event.preventDefault();
-    // console.log('here');
 
     var $button = $(this);
-    // console.log($button);
     var url = $button.attr('action');
-    console.log(url);
     var method = $button.attr('method');
-    console.log(method);
     var data = $button.serialize();
-    console.log(data);
 
     var request = $.ajax({
       url: url,
