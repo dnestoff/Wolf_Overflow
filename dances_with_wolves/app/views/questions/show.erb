@@ -49,7 +49,7 @@
     <div class="question-comments-container" id="question-comment-list">
       <h6>Comments:</h6>
 
-      <table id="question-comment-table">
+      <table id="question-comment-table" class="question-comments-display">
         <% @comments.each do |comment| %>
         <tr>
           <%= erb :"/comments/_new_comment", layout: false, locals: {question: @question, comment: comment} %>

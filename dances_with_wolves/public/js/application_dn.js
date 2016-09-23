@@ -45,6 +45,67 @@ $(document).ready(function() {
       };
     });
   });
+
+  $(".delete-comment").submit( function(event) {
+    event.preventDefault();
+    var $form = $(this)
+    var $table = $form.closest("table");
+    console.log("this");
+
+    request = $.ajax({
+      method: 'DELETE',
+      url: $form.attr("action"),
+      data: $form.serialize()
+    });
+
+    request.done( function(response) {
+      $form.closest("table").remove();
+    });
+
+  });
+
+//   $(".edit-comment").click( function(event) {
+//     event.preventDefault();
+//     var $editLink = $(this);
+//     var $table = $editLink.closest("table")
+//     console.log("this");
+//     var $url = $editLink.attr("href");
+//     console.log($url);
+
+//     request = $.ajax({
+//       method: 'GET',
+//       url: $url
+//     });
+
+//     request.done( function(response) {
+//       console.log(response);
+//       $editLink.closest("table").append('<tr><td>'+response+'</td></tr>');
+
+//     });
+//   });
+
+// //logic seems correct, but this isn't here when page loads, so it's not being listened to
+
+//   $(".edit-answer-comment").submit(function (event) {
+//     event.preventDefault();
+
+//     var $form = $(this);
+//     var $editURL = $form.attr("action");
+//     var $table = $form.closest("table");
+
+//     request = $.ajax({
+//       method: 'PUT',
+//       url: $editUrl,
+//       data: $form.serialize()
+//     });
+
+//     request.done( function(response) {
+//       console.log(response);
+//       $table.find(".comment-text").text(response.text+' by '+response.commenter);
+//       $table.children().last().remove();
+//     });
+//   });
+
   // This guarantees that any elements we bind to will exist on the page
   // when we try to bind to them
 
