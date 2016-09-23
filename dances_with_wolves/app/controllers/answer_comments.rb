@@ -29,8 +29,11 @@ put '/answers/:id/comments/:comment_id' do
   comment = Comment.find(params[:comment_id])
   comment.update_attributes(text: params[:text])
   answer = Answer.find(params[:id])
-
+  if request.xhr?
+    {text: comment.text, commenter: comment.commenter.username}.to_json
+  else
   redirect "/questions/#{answer.question_id}"
+  end
 end
 
 delete '/answers/:id/comments/:comment_id' do

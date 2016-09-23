@@ -146,7 +146,7 @@
                 </form>
               </td>
               <td class="vote-total"><%= Vote.vote_count(comment) %></td>
-              <td>
+              <td class="comment-text">
                 <%= comment.text %> by <%= comment.commenter.username %>
               </td>
               <% if logged_in? %>
